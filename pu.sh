@@ -6,7 +6,7 @@ then
 echo 'msg should not be empty'
 else
 git add .
-git commit -m msg
+git commit -m "$msg"
 echo 'pushing...'
 git push
 fi
