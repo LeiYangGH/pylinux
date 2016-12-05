@@ -49,11 +49,8 @@ def urlopen(page):
 
 
 def urlcall(url):
-    print(url)
-    #if browser:
-    #    subprocess.call([r'C:\Program Files (x86)\Google\Chrome\Application\chrome.exe', url])
-    #else:
-    #    os.startfile(url)
+    #print(url)
+    subprocess.call([r'google-chrome', url])
 
 
 def baidu_answer_nobest():
