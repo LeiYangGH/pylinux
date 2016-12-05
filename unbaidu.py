@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-#-*- coding:utf-8 -*-
+# coding:utf-8
 import os
 import sys
 import requests
@@ -10,23 +10,25 @@ from datetime import datetime
 
 open_url = r'http://zhidao.baidu.com/question/%s.html?entry=qb_ihome_tag' 
 
-days = 10
+days = 2 
 
 def diff_days(date):
-    if date.startswith(u'今天') or date.endswith(u'前'): 
+    #if date.startswith(b'\xe4\xbb\x8a\xe5\xa4\xa9') or date.endswith(b'\xe5\x89\x8d'): 
+    if date.startswith('今天') or date.endswith('前'): 
         return 0
     last_date = datetime.strptime(date, '%Y-%m-%d %H:%M')
     return (datetime.now() - last_date).days
 
 def urlopen(page=1):
-    print(page)
-    time.sleep(2)
+    print('page=' + str(page))
+ #   time.sleep(2)
+  #  time.sleep(2)
     timestamp = int(round(time.time() * 1000))
     url = r'https://zhidao.baidu.com/ihome/api/myanswer'
-    size = 100
+    size = 12
     parms = {
-    'pn' : (page - 1) * 100,
-    'rn' : 100,
+    'pn' : (page - 1) * size,
+    'rn' : size,
     't' : timestamp,
     'type' : 'default'
     }
@@ -37,10 +39,11 @@ def urlopen(page=1):
     try:
         r = requests.get(url, data=parms, cookies=headers)
         t = r.text
-        #print(t)
+        print(t)
         return t
     except Exception as e:
         print(e)
+
 
 def urlcall(url):
     print(url)
@@ -65,12 +68,14 @@ def baidu_answer_nobest():
         items = objs['data']['question']['list']
         # display list
         for i in items:
-            item_days = diff_days(i['createTime']) 
+            item_days = diff_days(i['createTime'])
+            #item_days = diff_days(i['createTime'].encode('utf8')) 
             #if x > 10: return urls
             print("d="+ str(item_days))
             if item_days > days: return urls
 
-            if i['qStatus'] is 2 and i['isBest'] == '0':
+            if i['qStatus'] is 2:
+            #if i['qStatus'] is 2 and i['isBest'] == '0':
                 urls.append(open_url % i['qid'])
         #x = x + 1
         #page+=1
@@ -81,4 +86,3 @@ sys.stdout.write('\n')
 
 if input('Are you sure open %d urls? [Y/n] ' % len(urls)) == 'y':
     [urlcall(url) for url in urls]
-    os.system('pause')
