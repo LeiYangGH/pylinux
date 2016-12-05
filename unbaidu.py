@@ -10,20 +10,21 @@ from datetime import datetime
 
 open_url = r'http://zhidao.baidu.com/question/%s.html?entry=qb_ihome_tag' 
 
-days = 2 
+days = 10 
 
 def diff_days(date):
     #if date.startswith(b'\xe4\xbb\x8a\xe5\xa4\xa9') or date.endswith(b'\xe5\x89\x8d'): 
     if date.startswith('今天') or date.endswith('前'): 
         return 0
     last_date = datetime.strptime(date, '%Y-%m-%d %H:%M')
+    print(last_date)
     return (datetime.now() - last_date).days
 
-def urlopen(page=1):
+def urlopen(page):
     print('page=' + str(page))
- #   time.sleep(2)
-  #  time.sleep(2)
+    #time.sleep(2)
     timestamp = int(round(time.time() * 1000))
+    print(timestamp)
     url = r'https://zhidao.baidu.com/ihome/api/myanswer'
     size = 12
     parms = {
@@ -33,13 +34,15 @@ def urlopen(page=1):
     'type' : 'default'
     }
     headers = {
-    #'BAIDUID' : u'D32C35449574FFEFB6EDD158B2A6F14D:FG=1',
+    'BAIDUID' : u'D32C35449574FFEFB6EDD158B2A6F14D:FG=1',
     'BDUSS' : r'JSLVNjQWtFMWd5Njh0Sm9ibkdSdUx6SXA4RlM2QU1zVEFER2xrMDJuc2pwV2hZSVFBQUFBJCQAAAAAAAAAAAEAAACnjSA20fS54rXEwNff49~jAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACMYQVgjGEFYSX'
     }
     try:
-        r = requests.get(url, data=parms, cookies=headers)
+        #r = requests.get(url, data=parms, cookies=headers)
+        r = requests.get(url, params=parms, cookies=headers)
         t = r.text
         print(t)
+        print(r.url)
         return t
     except Exception as e:
         print(e)
@@ -74,8 +77,8 @@ def baidu_answer_nobest():
             print("d="+ str(item_days))
             if item_days > days: return urls
 
-            if i['qStatus'] is 2:
-            #if i['qStatus'] is 2 and i['isBest'] == '0':
+           # if i['qStatus'] is 2:
+            if i['qStatus'] is 2 and i['isBest'] == '0':
                 urls.append(open_url % i['qid'])
         #x = x + 1
         #page+=1
