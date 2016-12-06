@@ -19,14 +19,12 @@ def diff_days(date):
         return 0
     #last_date = datetime.strptime(date, '%Y-%m-%d %H:%M')
     last_date = datetime.strptime(date, '%Y-%m-%d')
-    #print(last_date)
     return (datetime.now() - last_date).days
 
 def urlopen(page):
     print('\npage=' + str(page))
     #time.sleep(2)
     timestamp = int(round(time.time() * 1000))
-    #print(timestamp)
     url = r'https://zhidao.baidu.com/ihome/api/myanswer'
     size = 50 
     parms = {
@@ -40,7 +38,6 @@ def urlopen(page):
     'BDUSS' : r'JSLVNjQWtFMWd5Njh0Sm9ibkdSdUx6SXA4RlM2QU1zVEFER2xrMDJuc2pwV2hZSVFBQUFBJCQAAAAAAAAAAAEAAACnjSA20fS54rXEwNff49~jAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACMYQVgjGEFYSX'
     }
     try:
-        #r = requests.get(url, data=parms, cookies=headers)
         r = requests.get(url, params=parms, cookies=headers)
         t = r.text
         #print(t)
@@ -56,7 +53,6 @@ def urlcall(url):
 
 
 def baidu_answer_nobest():
-    #x = 1
     urls = []
     page = 1
 
@@ -71,17 +67,12 @@ def baidu_answer_nobest():
         # display list
         for i in items:
             item_days = diff_days(i['finishTime'])
-            #item_days = diff_days(i['createTime'].encode('utf8')) 
-            #if x > 10: return urls
             print(str(item_days), end='\t')
             if item_days > int(days): return urls
 
-           # if i['qStatus'] is 2:
             if i['qStatus'] is 2 and i['isBest'] == '0' and i['isRecommended'] != 1:
                 print(i['qid'])
                 urls.append(open_url % i['qid'])
-        #x = x + 1
-        #page+=1
         page+=1
 
 urls = baidu_answer_nobest()
@@ -90,4 +81,5 @@ sys.stdout.write('\n')
 if len(urls) < 10:
     [urlcall(url) for url in urls]
 else:
-    print(urls)
+    [urlcall(url) for url in urls[0:9]]
+    #print(urls)
