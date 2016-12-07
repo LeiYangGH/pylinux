@@ -51,6 +51,7 @@ def urlcall(url):
     #print(url)
     subprocess.call([r'google-chrome', url])
 
+bestids = []
 
 def baidu_answer_nobest():
     urls = []
@@ -67,16 +68,25 @@ def baidu_answer_nobest():
         # display list
         for i in items:
             item_days = diff_days(i['finishTime'])
-            print(str(item_days), end='\t')
+            #print(str(item_days), end='\t')
             if item_days > int(days): return urls
 
-            if i['qStatus'] is 2 and i['isBest'] == '0' and i['isRecommended'] != 1:
-                print(i['qid'])
-                urls.append(open_url % i['qid'])
+            if i['qStatus'] is 2:
+                print(i['title']+'\n\n')
+                if i['isBest'] == '0' and i['isRecommended'] != 1:
+                    urls.append(open_url % i['qid'])
+                    print('------------------------------')
+                elif i['isBest'] == '1':
+                   bestids.append(i['qid']) 
+
         page+=1
 
 urls = baidu_answer_nobest()
 sys.stdout.write('\n')
+
+with open("bestids.txt", "a") as bestf:
+    for id in bestids:
+        bestf.write(id+'\r\n')
 
 if len(urls) < 10:
     [urlcall(url) for url in urls]
