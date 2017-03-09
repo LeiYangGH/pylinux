@@ -14,16 +14,13 @@ days = int(input('days?'))
 print(days)
 
 def diff_days(date):
-    #if date.startswith(b'\xe4\xbb\x8a\xe5\xa4\xa9') or date.endswith(b'\xe5\x89\x8d'): 
     if date.startswith('今天') or date.endswith('前'): 
         return 0
-    #last_date = datetime.strptime(date, '%Y-%m-%d %H:%M')
     last_date = datetime.strptime(date, '%Y-%m-%d')
     return (datetime.now() - last_date).days
 
 def urlopen(page):
     print('\npage=' + str(page))
-    #time.sleep(2)
     timestamp = int(round(time.time() * 1000))
     url = r'https://zhidao.baidu.com/ihome/api/myanswer'
     size = 50 
@@ -40,15 +37,12 @@ def urlopen(page):
     try:
         r = requests.get(url, params=parms, cookies=headers)
         t = r.text
-        #print(t)
-        #print(r.url)
         return t
     except Exception as e:
         print(e)
 
 
 def urlcall(url):
-    #print(url)
     subprocess.call([r'google-chrome', url])
 
 bestids = []
@@ -60,6 +54,7 @@ def baidu_answer_nobest():
     while True:
         sys.stdout.write('.')
         objs = json.loads(urlopen(page))
+        time.sleep(2)
         if objs['errno'] == 1:
             print(objs['errmsg'])
             return urls
@@ -68,7 +63,6 @@ def baidu_answer_nobest():
         # display list
         for i in items:
             item_days = diff_days(i['finishTime'])
-            #print(str(item_days), end='\t')
             if item_days > int(days): return urls
 
             if i['qStatus'] is 2:
@@ -92,4 +86,3 @@ if len(urls) < 10:
     [urlcall(url) for url in urls]
 else:
     [urlcall(url) for url in urls[0:9]]
-    #print(urls)
