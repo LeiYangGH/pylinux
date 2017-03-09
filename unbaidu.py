@@ -36,8 +36,7 @@ def urlopen(page):
     }
     try:
         r = requests.get(url, params=parms, cookies=headers)
-        t = r.text
-        return t
+        return r.json()
     except Exception as e:
         print(e)
 
@@ -53,7 +52,8 @@ def baidu_answer_nobest():
 
     while True:
         sys.stdout.write('.')
-        objs = json.loads(urlopen(page))
+        objs = urlopen(page)
+        #objs = json.loads(urlopen(page))
         time.sleep(2)
         if objs['errno'] == 1:
             print(objs['errmsg'])
