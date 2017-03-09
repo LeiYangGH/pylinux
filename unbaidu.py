@@ -53,20 +53,19 @@ def baidu_answer_nobest():
     while True:
         sys.stdout.write('.')
         objs = urlopen(page)
-        #objs = json.loads(urlopen(page))
         time.sleep(2)
         if objs['errno'] == 1:
             print(objs['errmsg'])
             return urls
 
         items = objs['data']['question']['list']
-        # display list
         for i in items:
             item_days = diff_days(i['finishTime'])
-            if item_days > int(days): return urls
+            if item_days > int(days):
+                return urls
 
             if i['qStatus'] is 2:
-                print(i['title']+'\n\n')
+                print(i['title']+"\n\n")
                 if i['isBest'] == '0' and i['isRecommended'] != 1:
                     urls.append(open_url % i['qid'])
                     print('------------------------------')
@@ -78,9 +77,9 @@ def baidu_answer_nobest():
 urls = baidu_answer_nobest()
 sys.stdout.write('\n')
 
-with open("bestids.txt", "a") as bestf:
+with open('bestids.txt', 'a') as bestf:
     for id in bestids:
-        bestf.write(id+'\r\n')
+        bestf.write(id+"\r\n")
 
 if len(urls) < 10:
     [urlcall(url) for url in urls]
