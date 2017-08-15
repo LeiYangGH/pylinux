@@ -6,18 +6,23 @@ class student:
         x.name=name
         x.age=age
 
-    #why error if add this method
+
     def __setattr__(self, attr, value):
-        if attr == '3name1':
+        if attr == 'name':
             if len(value)>200:
                 print('name > 200')
+##            else:
+##                object.__setattr__(self, attr, value)
+        if attr == 'age':
+            if value>100:
+                print('age > 100')
+##            else:
+##                object.__setattr__(self, attr, value)
+        self.__dict__[attr] = value
+                
 
     def greet(x):
         print('I am ' + x.name + ',I\'m '+str(x.age)+' years old')
-
-    def setfixname(x):
-        x.name = 'fixed name'
-
 
 class manager(student):
     def manage(self,stu):
