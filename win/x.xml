@@ -1,0 +1,13 @@
+<root>
+    <version>1.0.04</version>
+    <mysqlhost>10.10.10.240</mysqlhost>
+    <mysqlport>3306</mysqlport>
+    <mysqluser>root</mysqluser>
+    <mysqlpassword>123456</mysqlpassword>
+    <mysqldatabase>longjingdb</mysqldatabase>
+    <mysqltable>mac</mysqltable>
+    <mysqlstbtype>L6000</mysqlstbtype>
+    <irdetokeytype>1</irdetokeytype>
+    <printerhost>192.168.1.51</printerhost>
+    <printerport>4001</printerport>
+</root>
