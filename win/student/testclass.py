@@ -5,7 +5,12 @@ class student:
         
         x.name=name
         x.age=age
-        x.setfixname()
+
+    #why error if add this method
+    def __setattr__(self, attr, value):
+        if attr == '3name1':
+            if len(value)>200:
+                print('name > 200')
 
     def greet(x):
         print('I am ' + x.name + ',I\'m '+str(x.age)+' years old')
@@ -13,18 +18,14 @@ class student:
     def setfixname(x):
         x.name = 'fixed name'
 
+
 class manager(student):
     def manage(self,stu):
         print(self.name + ' manage ' + stu.name )
-##    def __init__(x,name,age):
-##        x.name=name
-##        x.age=age
 
 if __name__ == '__main__':  
     ly = student('leiyang',29)
     ly.greet()
-
-
 
     mgr = student('shawn',40)
     mgr.greet()
