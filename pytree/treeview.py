@@ -110,18 +110,10 @@ if __name__ == '__main__':
     pwrapper = ParseTreeWrapper()           # make wrapper objects
     viewer   = TreeViewer(bwrapper, root)   # start out in binary mode
      
-    def onRadio():
-        viewer.setTreeType(bwrapper)             # change viewer's wrapper
-        for btn in b_btns: btn.pack(side=LEFT)   # unhide binary buttons
      
     var = StringVar()
     var.set('btree')
-    Radiobutton(root, text='Binary', command=onRadio, 
-                      variable=var, value='btree').pack(side=LEFT)
-    b_btns = []
-    b_btns.append(Button(root, text='test1', command=test1_binary))
-    onRadio()
-     
+    
     def onInputLine():
         line = entry.get()              # use per current tree wrapper type
         viewer.onInputLine(line)        # type a node list or expression
@@ -130,4 +122,7 @@ if __name__ == '__main__':
     entry = Entry(root)
     entry.pack(side=RIGHT, expand=YES, fill=X)
     entry.bind('<Return>', lambda event: onInputLine())   # button or enter key
+    test1_binary()                          
+    #root.geometry("1080x800+100+100") 
+    root.geometry("600x600+100+100") 
     root.mainloop()                                       # start up the gui
