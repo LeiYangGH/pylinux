@@ -56,18 +56,10 @@ class TreeViewer(Frame):
     def makeWidgets(self, bg):
         self.title = Label(self, text='PyTree 1.0')
         self.canvas = Canvas(self, bg=bg, borderwidth=0)
-        vbar = Scrollbar(self)
-        hbar = Scrollbar(self, orient='horizontal')
      
         self.title.pack(side=TOP, fill=X)
-        vbar.pack(side=RIGHT,  fill=Y)                  # pack canvas after bars
-        hbar.pack(side=BOTTOM, fill=X)
         self.canvas.pack(side=TOP, fill=BOTH, expand=YES)
      
-        vbar.config(command=self.canvas.yview)          # call on scroll move
-        hbar.config(command=self.canvas.xview)
-        self.canvas.config(yscrollcommand=vbar.set)     # call on canvas move
-        self.canvas.config(xscrollcommand=hbar.set)
         self.canvas.config(height=Height, width=Width)  # viewable area size
      
     def clearTree(self):
