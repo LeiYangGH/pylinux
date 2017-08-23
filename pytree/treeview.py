@@ -97,44 +97,8 @@ def test1_binary():                         # tree type is binary wrapper
     shownodes(nodes)                        # show nodes in input field
     tree.view()                             # sketch tree via embedded viewer
      
-def test2_binary():
-    nodes = 'badce'
-    tree  = btree.BinaryTree()              # embed wrapper in viewer
-    for c in nodes: tree.insert(c)          # make a binary tree
-    shownodes(nodes)
-    viewer.drawTree(tree.tree)              # ask viewer to draw it
      
-def test3_binary():
-    nodes = 'abcde'
-    tree  = BinaryTree(viewer)
-    for c in nodes: tree.insert(c)
-    shownodes(nodes)
-    tree.view()
      
-def test4_binary():
-    tree = BinaryTree(viewer)
-    import random                           # make a big binary tree
-    nodes = list(range(100))                # insert 100 nodes at random (3.X)
-    order = []                              # and sketch in viewer
-    while nodes:
-        item = random.choice(nodes)
-        nodes.remove(item)
-        tree.insert(item)
-        order.append(item)
-    shownodes(order)
-    tree.view()
-     
-def test_parser(expr):
-    parser = parser2.Parser()               # tree type is parser wrapper
-    parser.lex.newtext(expr)                # subtrees evaluate when clicked
-    tree   = parser.analyse()               # input line parses new expr
-    entry.delete(0, END)                    # vars set in wrapper dictionary
-    entry.insert(0, expr)                   # see lang/text chapter for parser
-    if tree: viewer.drawTree(tree)
-     
-def test1_parser(): test_parser("1 + 3 * (2 * 3 + 4)")    
-def test2_parser(): test_parser("set temp 1 + 3 * 2 * 3 + 4")
-def test3_parser(): test_parser("set result temp + ((1 + 3) * 2) * (3 + 4)")
      
 ###################################################################
 # build viewer with extra widgets to test tree types
@@ -147,30 +111,15 @@ if __name__ == '__main__':
     viewer   = TreeViewer(bwrapper, root)   # start out in binary mode
      
     def onRadio():
-        if var.get() == 'btree':
-            viewer.setTreeType(bwrapper)             # change viewer's wrapper
-            for btn in p_btns: btn.pack_forget()     # erase parser test buttons
-            for btn in b_btns: btn.pack(side=LEFT)   # unhide binary buttons
-        elif var.get() == 'ptree':
-            viewer.setTreeType(pwrapper)
-            for btn in b_btns: btn.pack_forget()
-            for btn in p_btns: btn.pack(side=LEFT)
+        viewer.setTreeType(bwrapper)             # change viewer's wrapper
+        for btn in b_btns: btn.pack(side=LEFT)   # unhide binary buttons
      
     var = StringVar()
     var.set('btree')
     Radiobutton(root, text='Binary', command=onRadio, 
                       variable=var, value='btree').pack(side=LEFT)
-    Radiobutton(root, text='Parser', command=onRadio, 
-                      variable=var, value='ptree').pack(side=LEFT)
     b_btns = []
     b_btns.append(Button(root, text='test1', command=test1_binary))
-    b_btns.append(Button(root, text='test2', command=test2_binary))
-    b_btns.append(Button(root, text='test3', command=test3_binary))
-    b_btns.append(Button(root, text='test4', command=test4_binary))
-    p_btns = []
-    p_btns.append(Button(root, text='test1', command=test1_parser))
-    p_btns.append(Button(root, text='test2', command=test2_parser))
-    p_btns.append(Button(root, text='test3', command=test3_parser))
     onRadio()
      
     def onInputLine():
