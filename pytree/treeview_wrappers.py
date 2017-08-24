@@ -14,7 +14,7 @@
 from tkinter import *
 from tkinter.messagebox import showinfo
      
-Width, Height = 350, 350                    # start canvas size (reset per tree)
+Width, Height = 600, 400                    # start canvas size (reset per tree)
 Rowsz = 100                                 # pixels per tree row
 Colsz = 100                                 # pixels per tree col
      
@@ -32,12 +32,6 @@ class TreeWrapper:                          # subclass for a tree type
     def value(self, treenode):
         return ''
 
-    def onClick(self, treenode):            # node label click callback
-        return ''
-
-    def onInputLine(self, line, viewer):    # input line sent callback
-        pass
-     
 ###########$######################
 # tree view gui, tree independent
 ##################################

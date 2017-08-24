@@ -44,13 +44,6 @@ class ParseTreeWrapper(TreeWrapper):
                 return str(getattr(node, attr))
         return 'set'
 
-    def onClick(self, node):                        # on tree label click
-        try:                                        # tree-specific action
-            result = node.apply(self.dict)          # evaluate subtree
-            return 'Value = ' + str(result)         # show result in popup
-        except:
-            return 'Value = <error>'
-
      
      
 def test1_binary():                         # tree type is binary wrapper
@@ -72,10 +65,5 @@ if __name__ == '__main__':
     viewer   = TreeViewer(bwrapper, root)   # start out in binary mode
      
      
-    var = StringVar()
-    var.set('btree')
-    
-     
     test1_binary()                          
-    root.geometry("600x600+100+100") 
     root.mainloop()                                       # start up the gui
