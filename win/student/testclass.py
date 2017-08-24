@@ -5,6 +5,7 @@ class student:
         
         x.name=name
         x.age=age
+        xyz = 5
 
 
     def __setattr__(self, attr, value):
@@ -34,3 +35,5 @@ if __name__ == '__main__':
 
     mgr = student('shawn',40)
     mgr.greet()
+
+    print('xyz = %d' % (self.xyz))
