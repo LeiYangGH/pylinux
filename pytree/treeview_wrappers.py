@@ -17,17 +17,19 @@ from tkinter.messagebox import showinfo
 Width, Height = 600, 400                    # start canvas size (reset per tree)
 Rowsz = 100                                 # pixels per tree row
 Colsz = 100                                 # pixels per tree col
-     
-###################################
-# interface to tree object's nodes
-###################################
-     
-class TreeWrapper:                          # subclass for a tree type
-    def children(self, treenode):
-        assert 0, 'children method must be specialized for tree type'
 
-    def label(self, treenode):
-        assert 0, 'label method must be specialized for tree type'
+class TreeWrapper:          # embed binary tree in viewer
+    def children(self, node):                  # adds viewer protocols
+        try:                                   # to interface with tree
+            return [node.left, node.right]
+        except: 
+            return None
+
+    def label(self, node):
+        try:    
+            return str(node.data)
+        except: 
+            return str(node)
 
     def value(self, treenode):
         return ''
