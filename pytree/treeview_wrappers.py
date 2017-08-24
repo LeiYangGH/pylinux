@@ -14,12 +14,8 @@ class EmptyNode:
         return BinaryNode(self, value, self)      # add new node at bottom
     def children(self):                  # adds viewer protocols
         return None
-
     def label(self):
-        return str(self)
-
-    def value(self):
-        return ''
+        return "*"
 
 class BinaryNode:
     def __init__(self, left, value, right):
@@ -46,9 +42,6 @@ class BinaryNode:
     def label(self):
         return str(self.data)
 
-    def value(self):
-        return ''
-
 from tkinter import *
 from tkinter.messagebox import showinfo
      
@@ -56,15 +49,21 @@ Width, Height = 600, 400                    # start canvas size (reset per tree)
 Rowsz = 100                                 # pixels per tree row
 Colsz = 100                                 # pixels per tree col
 
+root = Tk()                             # build a single viewer gui
+nodes = [3, 1, 9, 2, 7]                 # make a binary tree
+tree  = BinaryTree()             # embed viewer in tree
+for i in nodes: tree.insert(i) 
+
 class TreeViewer(Frame):
-    def __init__(self, parent=None, tree=None, bg='brown', fg='beige'):
-        Frame.__init__(self, parent)
+    def __init__(self, bg='brown', fg='beige'):
+        Frame.__init__(self, root)
         self.pack(expand=YES, fill=BOTH)
         self.makeWidgets(bg)                    # build gui: scrolled canvas
         self.master.title('PyTree 1.0')         # assume I'm run standalone
         self.fg = fg                            # setTreeType changes wrapper 
-        if tree:
-           self.drawTree(tree)
+        self.drawTree(tree.tree)
+        root.mainloop()  
+
      
     def makeWidgets(self, bg):
         self.title = Label(self, text='PyTree 1.0')
@@ -111,8 +110,6 @@ class TreeViewer(Frame):
                 colpos += colinc
                 if node != None:
                     text = node.label()
-                    more = node.value()
-                    if more: text = text + '=' + more
                     win = Label(self.canvas, text=text, 
                                              bg=self.fg, bd=3, relief=RAISED)
                     win.pack()
@@ -128,11 +125,7 @@ class TreeViewer(Frame):
                     node.__colpos = colpos          # mark node, private attrs
             rowpos += Rowsz
 
-root = Tk()                             # build a single viewer gui
-nodes = [3, 1, 9, 2, 7]                 # make a binary tree
-tree  = BinaryTree()             # embed viewer in tree
-for i in nodes: tree.insert(i)            
-TreeViewer(root,tree.tree)   # start out in binary mode
-     
+           
+TreeViewer()   # start out in binary mode
+
                          
-root.mainloop()  
