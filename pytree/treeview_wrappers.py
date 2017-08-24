@@ -45,7 +45,6 @@ class BinaryNode:
 from tkinter import *
 from tkinter.messagebox import showinfo
      
-Width, Height = 600, 400                    # start canvas size (reset per tree)
 Rowsz = 100                                 # pixels per tree row
 Colsz = 100                                 # pixels per tree col
 
@@ -59,26 +58,19 @@ class TreeViewer(Frame):
         Frame.__init__(self, root)
         self.pack(expand=YES, fill=BOTH)
         self.makeWidgets(bg)                    # build gui: scrolled canvas
-        self.master.title('PyTree 1.0')         # assume I'm run standalone
         self.fg = fg                            # setTreeType changes wrapper 
         self.drawTree(tree.tree)
         root.mainloop()  
 
      
     def makeWidgets(self, bg):
-        self.title = Label(self, text='PyTree 1.0')
         self.canvas = Canvas(self, bg=bg, borderwidth=0)
-     
-        self.title.pack(side=TOP, fill=X)
         self.canvas.pack(side=TOP, fill=BOTH, expand=YES)
-     
-        self.canvas.config(height=Height, width=Width)  # viewable area size
+        self.canvas.config(height=400, width=600)  # viewable area size
      
      
     def drawTree(self, tree):
         levels, maxrow = self.planLevels(tree)
-        self.canvas.config(scrollregion=(                     # scrollable area
-            0, 0, (Colsz * maxrow), (Rowsz * len(levels)) ))  # upleft, lowright
         self.drawLevels(levels, maxrow)
      
     def planLevels(self, root):
