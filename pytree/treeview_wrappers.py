@@ -45,7 +45,6 @@ class BinaryNode:
 # see and run treeview.py for binary and parse tree wrapper test cases;
 #########################################################################
 """
-#import btree
 from tkinter import *
 from tkinter.messagebox import showinfo
      
@@ -69,17 +68,13 @@ class TreeWrapper:          # embed binary tree in viewer
     def value(self, treenode):
         return ''
 
-###########$######################
-# tree view gui, tree independent
-##################################
      
 class TreeViewer(Frame):
-    def __init__(self, wrapper, parent=None, tree=None, bg='brown', fg='beige'):
+    def __init__(self, parent=None, tree=None, bg='brown', fg='beige'):
         Frame.__init__(self, parent)
         self.pack(expand=YES, fill=BOTH)
         self.makeWidgets(bg)                    # build gui: scrolled canvas
         self.master.title('PyTree 1.0')         # assume I'm run standalone
-        self.wrapper = wrapper                  # embed a TreeWrapper object
         self.fg = fg                            # setTreeType changes wrapper 
         if tree:
            self.drawTree(tree)
@@ -95,13 +90,12 @@ class TreeViewer(Frame):
      
      
     def drawTree(self, tree):
-        wrapper = self.wrapper
-        levels, maxrow = self.planLevels(tree, wrapper)
+        levels, maxrow = self.planLevels(tree)
         self.canvas.config(scrollregion=(                     # scrollable area
             0, 0, (Colsz * maxrow), (Rowsz * len(levels)) ))  # upleft, lowright
-        self.drawLevels(levels, maxrow, wrapper)
+        self.drawLevels(levels, maxrow)
      
-    def planLevels(self, root, wrap):
+    def planLevels(self, root):
         levels = []
         maxrow = 0                                       # traverse tree to 
         currlevel = [(root, None)]                       # layout rows, cols
@@ -112,7 +106,7 @@ class TreeViewer(Frame):
             nextlevel = []
             for (node, parent) in currlevel:
                 if node != None:
-                    children = wrap.children(node)             # list of nodes
+                    children = bwrapper.children(node)             # list of nodes
                     if not children:
                         nextlevel.append((None, None))         # leave a hole
                     else:
@@ -121,7 +115,7 @@ class TreeViewer(Frame):
             currlevel = nextlevel
         return levels, maxrow
      
-    def drawLevels(self, levels, maxrow, wrap):
+    def drawLevels(self, levels, maxrow):
         rowpos = 0                                         # draw tree per plan
         for level in levels:                               # set click handlers
             colinc = (maxrow * Colsz) // (len(level) + 1)  # levels is treenodes
@@ -129,8 +123,8 @@ class TreeViewer(Frame):
             for (node, parent) in level:
                 colpos += colinc
                 if node != None:
-                    text = wrap.label(node)
-                    more = wrap.value(node)
+                    text = bwrapper.label(node)
+                    more = bwrapper.value(node)
                     if more: text = text + '=' + more
                     win = Label(self.canvas, text=text, 
                                              bg=self.fg, bd=3, relief=RAISED)
@@ -153,7 +147,7 @@ bwrapper = TreeWrapper()          # add extras: input line, test btns
 nodes = [3, 1, 9, 2, 7]                 # make a binary tree
 tree  = BinaryTree()             # embed viewer in tree
 for i in nodes: tree.insert(i)            
-TreeViewer(bwrapper, root,tree.tree)   # start out in binary mode
+TreeViewer(root,tree.tree)   # start out in binary mode
      
                          
 root.mainloop()  
