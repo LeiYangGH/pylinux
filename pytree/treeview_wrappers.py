@@ -12,6 +12,14 @@ class EmptyNode:
         return False
     def insert(self, value):
         return BinaryNode(self, value, self)      # add new node at bottom
+    def children(self):                  # adds viewer protocols
+        return None
+
+    def label(self):
+        return str(self)
+
+    def value(self):
+        return ''
 
 class BinaryNode:
     def __init__(self, left, value, right):
@@ -32,19 +40,15 @@ class BinaryNode:
             self.right = self.right.insert(value)        # grow in right
         return self
 
+    def children(self):                  # adds viewer protocols
+        return [self.left, self.right]
 
-"""
-#########################################################################
-# PyTree: sketch arbitrary tree data structures in a scrolled canvas;
-# this version uses tree wrapper classes embedded in the viewer gui 
-# to support arbitrary trees (i.e.. composition, not viewer subclassing);
-# also adds tree node label click callbacks--run tree specific actions;
-# see treeview_subclasses.py for subclass-based alternative structure;
-# subclassing limits one tree viewer to one tree type, wrappers do not;
-# see treeview_left.py for an alternative way to draw the tree object;
-# see and run treeview.py for binary and parse tree wrapper test cases;
-#########################################################################
-"""
+    def label(self):
+        return str(self.data)
+
+    def value(self):
+        return ''
+
 from tkinter import *
 from tkinter.messagebox import showinfo
      
@@ -52,23 +56,6 @@ Width, Height = 600, 400                    # start canvas size (reset per tree)
 Rowsz = 100                                 # pixels per tree row
 Colsz = 100                                 # pixels per tree col
 
-class TreeWrapper:          # embed binary tree in viewer
-    def children(self, node):                  # adds viewer protocols
-        try:                                   # to interface with tree
-            return [node.left, node.right]
-        except: 
-            return None
-
-    def label(self, node):
-        try:    
-            return str(node.data)
-        except: 
-            return str(node)
-
-    def value(self, treenode):
-        return ''
-
-     
 class TreeViewer(Frame):
     def __init__(self, parent=None, tree=None, bg='brown', fg='beige'):
         Frame.__init__(self, parent)
@@ -106,7 +93,7 @@ class TreeViewer(Frame):
             nextlevel = []
             for (node, parent) in currlevel:
                 if node != None:
-                    children = bwrapper.children(node)             # list of nodes
+                    children = node.children()             # list of nodes
                     if not children:
                         nextlevel.append((None, None))         # leave a hole
                     else:
@@ -123,8 +110,8 @@ class TreeViewer(Frame):
             for (node, parent) in level:
                 colpos += colinc
                 if node != None:
-                    text = bwrapper.label(node)
-                    more = bwrapper.value(node)
+                    text = node.label()
+                    more = node.value()
                     if more: text = text + '=' + more
                     win = Label(self.canvas, text=text, 
                                              bg=self.fg, bd=3, relief=RAISED)
@@ -142,8 +129,6 @@ class TreeViewer(Frame):
             rowpos += Rowsz
 
 root = Tk()                             # build a single viewer gui
-bwrapper = TreeWrapper()          # add extras: input line, test btns
-
 nodes = [3, 1, 9, 2, 7]                 # make a binary tree
 tree  = BinaryTree()             # embed viewer in tree
 for i in nodes: tree.insert(i)            
