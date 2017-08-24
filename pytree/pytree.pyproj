@@ -5,7 +5,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{4cac8ab1-665f-464c-ac91-7f77e2328a93}</ProjectGuid>
     <ProjectHome />
-    <StartupFile>treeview.py</StartupFile>
+    <StartupFile>treeview_wrappers.py</StartupFile>
     <SearchPath />
     <WorkingDirectory>.</WorkingDirectory>
     <OutputPath>.</OutputPath>
@@ -19,8 +19,6 @@
     <VisualStudioVersion Condition=" '$(VisualStudioVersion)' == '' ">10.0</VisualStudioVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="btree.py" />
-    <Compile Include="treeview.py" />
     <Compile Include="treeview_wrappers.py" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
