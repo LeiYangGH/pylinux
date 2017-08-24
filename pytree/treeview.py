@@ -23,47 +23,16 @@ class BinaryTree(btree.BinaryTree):
 
     def view(self):
         self.viewer.drawTree(self.tree)
-     
-     
-class ParseTreeWrapper(TreeWrapper):
-    def __init__(self):                        # embed parse tree in viewer
-        self.dict = {}                         # adds viewer protocols
 
-    def children(self, node):
-        try:
-            return [node.left, node.right]
-        except:
-            try:
-                return [node.var, node.val]
-            except: 
-                return None
 
-    def label(self, node):
-        for attr in ['label', 'num', 'name']:
-            if hasattr(node, attr):
-                return str(getattr(node, attr))
-        return 'set'
+root = Tk()                             # build a single viewer gui
+bwrapper = BinaryTreeWrapper()          # add extras: input line, test btns
+viewer   = TreeViewer(bwrapper, root)   # start out in binary mode
 
+nodes = [3, 1, 9, 2, 7]                 # make a binary tree
+tree  = BinaryTree(viewer)              # embed viewer in tree
+for i in nodes: tree.insert(i)            
+tree.view()         
      
-     
-def test1_binary():                         # tree type is binary wrapper
-    nodes = [3, 1, 9, 2, 7]                 # make a binary tree
-    tree  = BinaryTree(viewer)              # embed viewer in tree
-    for i in nodes: tree.insert(i)            
-    tree.view()                             # sketch tree via embedded viewer
-     
-     
-     
-     
-###################################################################
-# build viewer with extra widgets to test tree types
-###################################################################
-     
-if __name__ == '__main__':
-    root = Tk()                             # build a single viewer gui
-    bwrapper = BinaryTreeWrapper()          # add extras: input line, test btns
-    viewer   = TreeViewer(bwrapper, root)   # start out in binary mode
-     
-     
-    test1_binary()                          
-    root.mainloop()                                       # start up the gui
+                         
+root.mainloop()                                       # start up the gui

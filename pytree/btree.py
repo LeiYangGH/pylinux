@@ -2,7 +2,6 @@
 
 class BinaryTree:
     def __init__(self):       self.tree = EmptyNode()
-    def __repr__(self):       return repr(self.tree)
     def lookup(self, value):  return self.tree.lookup(value)
     def insert(self, value):  self.tree = self.tree.insert(value)
 
@@ -33,6 +32,3 @@ class BinaryNode:
             self.right = self.right.insert(value)        # grow in right
         return self
 
-    def __repr__(self):
-        return ('( %s, %s, %s )' %
-                 (repr(self.left), repr(self.data), repr(self.right)))

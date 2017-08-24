@@ -109,7 +109,4 @@ class TreeViewer(Frame):
                     node.__rowpos = rowpos
                     node.__colpos = colpos          # mark node, private attrs
             rowpos += Rowsz
-     
-    def setTreeType(self, newTreeWrapper):          # change tree type drawn
-        if self.wrapper != newTreeWrapper:          # effective on next draw
-            self.wrapper = newTreeWrapper
+
