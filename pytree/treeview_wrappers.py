@@ -62,14 +62,8 @@ class TreeViewer(Frame):
      
         self.canvas.config(height=Height, width=Width)  # viewable area size
      
-    def clearTree(self):
-        mylabel = 'PyTree 1.0 - ' + self.wrapper.__class__.__name__
-        self.title.config(text=mylabel)
-        self.unbind_all('<Button-1>')
-        self.canvas.delete('all')                       # clear events, drawing
      
     def drawTree(self, tree):
-        self.clearTree()
         wrapper = self.wrapper
         levels, maxrow = self.planLevels(tree, wrapper)
         self.canvas.config(scrollregion=(                     # scrollable area
@@ -110,8 +104,7 @@ class TreeViewer(Frame):
                     win = Label(self.canvas, text=text, 
                                              bg=self.fg, bd=3, relief=RAISED)
                     win.pack()
-                    win.bind('<Button-1>', 
-                                (lambda evt, node=node: self.onClick(evt, node)))
+
                     self.canvas.create_window(colpos, rowpos, anchor=NW, 
                                 window=win, width=Colsz*.5, height=Rowsz*.5)
                     if parent != None:
@@ -123,22 +116,6 @@ class TreeViewer(Frame):
                     node.__colpos = colpos          # mark node, private attrs
             rowpos += Rowsz
      
-    def onClick(self, event, node):
-        label = event.widget
-        wrap  = self.wrapper
-        text  = 'Label = ' + wrap.label(node)       # on label click
-        value = wrap.value(node)
-        if value: 
-            text += '\nValue = ' + value            # add tree text if any
-        result = wrap.onClick(node)                 # run tree action if any
-        if result:
-            text += '\n' + result                   # add action result
-        showinfo('PyTree', text)                    # popup std dialog
-     
-    def onInputLine(self, line):                    # feed text to tree wrapper
-        self.wrapper.onInputLine(line, self)        # ex: parse and redraw tree
-     
     def setTreeType(self, newTreeWrapper):          # change tree type drawn
         if self.wrapper != newTreeWrapper:          # effective on next draw
             self.wrapper = newTreeWrapper
-            self.clearTree()                        # else old node, new wrapper
