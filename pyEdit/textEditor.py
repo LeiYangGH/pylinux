@@ -40,13 +40,6 @@ TBD (and suggested exercises):
 -could experiment with "grep" tbd Unicode issues (see notes in the code);
 ################################################################################
 """
-import sys, os  
-
-f = open('paths.txt', 'w')
-f.write('\n'.join(sys.path))
-f.close()
-
-
 Version = '2.1'
 import sys, os                                    # platform, args, run tools
 from tkinter import *                             # base widgets, constants
