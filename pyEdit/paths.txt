@@ -1,0 +1,10 @@
+C:\G\pylinux\pyEdit
+C:\G\pylinux\pyEdit
+C:\Users\YLei\AppData\Local\Programs\Python\Python35-32\python35.zip
+C:\Users\YLei\AppData\Local\Programs\Python\Python35-32\DLLs
+C:\Users\YLei\AppData\Local\Programs\Python\Python35-32\lib
+C:\Users\YLei\AppData\Local\Programs\Python\Python35-32
+C:\Users\YLei\AppData\Local\Programs\Python\Python35-32\lib\site-packages
+C:\Users\YLei\AppData\Local\Programs\Python\Python35-32\lib\site-packages\win32
+C:\Users\YLei\AppData\Local\Programs\Python\Python35-32\lib\site-packages\win32\lib
+C:\Users\YLei\AppData\Local\Programs\Python\Python35-32\lib\site-packages\Pythonwin

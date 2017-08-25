@@ -52,9 +52,8 @@ root = Tk()                             # build a single viewer gui
 nodes = [3, 1, 9, 2, 7]                 # make a binary tree
 tree  = BinaryTree()             # embed viewer in tree
 for i in nodes: tree.insert(i) 
-
 class TreeViewer(Frame):
-    def __init__(self, bg='brown', fg='beige'):
+    def __init__(self, bg='white', fg='beige'):
         Frame.__init__(self, root)
         self.pack(expand=YES, fill=BOTH)
         self.makeWidgets(bg)                    # build gui: scrolled canvas
@@ -120,4 +119,4 @@ class TreeViewer(Frame):
            
 TreeViewer()   # start out in binary mode
 
-                         
+                   
