@@ -12,13 +12,12 @@ def get_all_logs(dir):
 
 def join_logs(logs,allfile):
     with open(allfile,'wt',encoding='utf-8') as all:
-         for (k,v) in logs.items():
-             fullname = v
+         for (filename,fullname) in logs.items():
              try:
                  print(fullname)
                  logf = open(fullname, 'r',encoding='utf-8')
                  content = logf.read()
-                 all.write("="*20+k+"="*20+"\r\n"*2+"\n")
+                 all.write("="*20+filename+"="*20+"\r\n"*2+"\n")
                  all.writelines(content)
                  all.write( "\r\n" * 2)
              except UnicodeDecodeError:
